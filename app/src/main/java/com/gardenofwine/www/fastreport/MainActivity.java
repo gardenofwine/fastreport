@@ -1,15 +1,16 @@
 package com.gardenofwine.www.fastreport;
 
+import android.os.AsyncTask;
 import android.support.v7.app.ActionBarActivity;
-import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.os.Build;
+import android.widget.Button;
 
 
 public class MainActivity extends ActionBarActivity {
@@ -20,7 +21,7 @@ public class MainActivity extends ActionBarActivity {
         setContentView(R.layout.activity_main);
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container, new PlaceholderFragment())
+                    .add(R.id.container, new ServiceRequestFragment())
                     .commit();
         }
     }
@@ -51,16 +52,37 @@ public class MainActivity extends ActionBarActivity {
     /**
      * A placeholder fragment containing a simple view.
      */
-    public static class PlaceholderFragment extends Fragment {
+    public static class ServiceRequestFragment extends Fragment {
 
-        public PlaceholderFragment() {
+        public ServiceRequestFragment() {
         }
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_main, container, false);
+
+            final Button button = (Button) rootView.findViewById(R.id.submit_button);
+            button.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    new PostServiceRequestTask().execute("");
+                }
+            });
+
             return rootView;
+        }
+    }
+
+    public static class PostServiceRequestTask extends AsyncTask<String, Void, String> {
+
+        @Override
+        protected String doInBackground(String... params) {
+            new DigitelMobileAPI().postServiceRequest(params[0]);
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
         }
     }
 }
