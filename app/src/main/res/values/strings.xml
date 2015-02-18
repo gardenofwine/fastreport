@@ -4,5 +4,9 @@
     <string name="app_name">דו״ח מהיר</string>
     <string name="action_settings">Settings</string>
     <string name="action_open_service_request">פתח קריאה</string>
+    <string name="label_name">שם</string>
+    <string name="label_phone">טלפון</string>
+    <string name="label_address">כתובת המפגע</string>
+    <string name="label_description">תיאור המפגע</string>
 
 </resources>
