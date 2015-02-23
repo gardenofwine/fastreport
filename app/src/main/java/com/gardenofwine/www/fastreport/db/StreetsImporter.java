@@ -6,10 +6,14 @@ import android.util.Log;
 import com.gardenofwine.www.fastreport.db.models.Street;
 import com.j256.ormlite.android.apptools.OpenHelperManager;
 import com.j256.ormlite.dao.RuntimeExceptionDao;
+import com.j256.ormlite.misc.TransactionManager;
+import com.j256.ormlite.support.ConnectionSource;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.sql.SQLException;
 import java.util.List;
+import java.util.concurrent.Callable;
 
 import au.com.bytecode.opencsv.CSVReader;
 
@@ -29,22 +33,37 @@ public class StreetsImporter {
 
     public void importStreetsFromCSV() {
         FastReportDBHelper dbHelper = OpenHelperManager.getHelper(context, FastReportDBHelper.class);
-        RuntimeExceptionDao<Street, Integer> dao = dbHelper.getRuntimeExceptionDao(Street.class);
+        final RuntimeExceptionDao<Street, Integer> dao = dbHelper.getRuntimeExceptionDao(Street.class);
+        ConnectionSource connectionSource = dbHelper.getConnectionSource();
+
         try {
-            InputStreamReader reader = new InputStreamReader(context.getAssets().open(FILE_NAME));
-            CSVReader csvReader = new CSVReader(reader);
-            int streetsAdded = 0;
-            Log.d(LOG_TAG, "Beginning importing streets");
-            String[] nextLine = csvReader.readNext();
-            while (nextLine != null) {
-                boolean added = addStreet(dao, nextLine);
-                if (added) {
-                    streetsAdded++;
+            TransactionManager.callInTransaction(connectionSource, new Callable<Void>() {
+                @Override
+                public Void call() throws Exception {
+                    CSVReader csvReader = null;
+                    try {
+                        csvReader = new CSVReader(new InputStreamReader(context.getAssets().open(FILE_NAME)));
+                        int streetsAdded = 0;
+                        Log.d(LOG_TAG, "Beginning importing streets");
+                        String[] nextLine = csvReader.readNext();
+                        while (nextLine != null) {
+                            boolean added = addStreet(dao, nextLine);
+                            if (added) streetsAdded++;
+                            nextLine = csvReader.readNext();
+                        }
+                        Log.d(LOG_TAG, "Imported streets: " + streetsAdded);
+                    } catch (IOException e) {
+                        Log.e(LOG_TAG, e.getMessage(), e);
+                    } finally {
+                        if (csvReader != null) {
+                            csvReader.close();
+                        }
+                    }
+
+                    return null;
                 }
-                nextLine = csvReader.readNext();
-            }
-            Log.d(LOG_TAG, "Imported streets: " + streetsAdded);
-        } catch (IOException e) {
+            });
+        } catch (SQLException e) {
             Log.e(LOG_TAG, e.getMessage(), e);
         } finally {
             OpenHelperManager.releaseHelper();
