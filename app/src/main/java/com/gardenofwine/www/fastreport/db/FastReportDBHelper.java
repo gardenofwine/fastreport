@@ -2,40 +2,42 @@ package com.gardenofwine.www.fastreport.db;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
+
+import com.gardenofwine.www.fastreport.db.models.Street;
+import com.j256.ormlite.android.apptools.OrmLiteSqliteOpenHelper;
+import com.j256.ormlite.support.ConnectionSource;
+import com.j256.ormlite.table.TableUtils;
+
+import java.sql.SQLException;
 
 /**
  * Created by ifeins on 2/18/15.
  */
-public class FastReportDBHelper extends SQLiteOpenHelper {
+public class FastReportDBHelper extends OrmLiteSqliteOpenHelper {
+
+    private static final String LOG_TAG = FastReportDBHelper.class.getSimpleName();
 
     private static final String DB_NAME = "fastreport.db";
 
-    private static final int DB_VERSION = 2;
+    private static final int DB_VERSION = 1;
 
     public FastReportDBHelper(Context context) {
         super(context, DB_NAME, null, DB_VERSION);
     }
 
     @Override
-    public void onCreate(SQLiteDatabase db) {
-        final String CREATE_STREETS_SQL = "CREATE TABLE streets (" +
-                "_id INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                "street_name TEXT NOT NULL, " +
-                "english_street_name TEXT, " +
-                "street_code INTEGER NOT NULL UNIQUE, " +
-                "first_apartment_number INTEGER, " +
-                "last_apartment_number INTEGER)";
-
-        db.execSQL(CREATE_STREETS_SQL);
+    public void onCreate(SQLiteDatabase database, ConnectionSource connectionSource) {
+        try {
+            TableUtils.createTable(connectionSource, Street.class);
+        } catch (SQLException e) {
+            Log.e(LOG_TAG, e.getMessage(), e);
+        }
     }
 
     @Override
-    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+    public void onUpgrade(SQLiteDatabase database, ConnectionSource connectionSource, int oldVersion, int newVersion) {
 
     }
 
-    public void insertStreet(String streetName, String englishStreetName, int streetCode,
-                             int firstNumber, int secondNumber) {
-    }
 }
