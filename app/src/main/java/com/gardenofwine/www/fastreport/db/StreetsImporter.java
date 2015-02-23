@@ -1,14 +1,15 @@
 package com.gardenofwine.www.fastreport.db;
 
-import android.content.ContentValues;
 import android.content.Context;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
-import java.io.FileNotFoundException;
+import com.gardenofwine.www.fastreport.db.models.Street;
+import com.j256.ormlite.android.apptools.OpenHelperManager;
+import com.j256.ormlite.dao.RuntimeExceptionDao;
+
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.List;
 
 import au.com.bytecode.opencsv.CSVReader;
 
@@ -21,14 +22,14 @@ public class StreetsImporter {
 
     public static final String FILE_NAME = "tel_aviv_streets.csv";
     private final Context context;
-    private final FastReportDBHelper dbHelper;
 
     public StreetsImporter(Context context) {
         this.context = context;
-        this.dbHelper = new FastReportDBHelper(context);
     }
 
     public void importStreetsFromCSV() {
+        FastReportDBHelper dbHelper = OpenHelperManager.getHelper(context, FastReportDBHelper.class);
+        RuntimeExceptionDao<Street, Integer> dao = dbHelper.getRuntimeExceptionDao(Street.class);
         try {
             InputStreamReader reader = new InputStreamReader(context.getAssets().open(FILE_NAME));
             CSVReader csvReader = new CSVReader(reader);
@@ -36,52 +37,36 @@ public class StreetsImporter {
             Log.d(LOG_TAG, "Beginning importing streets");
             String[] nextLine = csvReader.readNext();
             while (nextLine != null) {
-                boolean added = addStreet(nextLine);
+                boolean added = addStreet(dao, nextLine);
                 if (added) {
                     streetsAdded++;
                 }
                 nextLine = csvReader.readNext();
             }
             Log.d(LOG_TAG, "Imported streets: " + streetsAdded);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
         } catch (IOException e) {
-            e.printStackTrace();
+            Log.e(LOG_TAG, e.getMessage(), e);
+        } finally {
+            OpenHelperManager.releaseHelper();
         }
     }
 
-    private boolean addStreet(String[] csvRow) {
+    private boolean addStreet(RuntimeExceptionDao<Street, Integer> dao, String[] csvRow) {
         String streetCode = csvRow[0].trim();
-        if (doesStreetExist(streetCode)) {
+        if (doesStreetExist(dao, streetCode)) {
             return false;
         }
 
-        SQLiteDatabase db = dbHelper.getWritableDatabase();
-        ContentValues values = new ContentValues();
+        Street street = new Street(csvRow[3].trim(), csvRow[4].trim(), Integer.parseInt(streetCode),
+                Integer.parseInt(csvRow[1].trim()),
+                Integer.parseInt(csvRow[2].trim()));
 
-        values.put("street_name", csvRow[3].trim());
-        values.put("english_street_name", csvRow[4].trim());
-        values.put("street_code", streetCode);
-        values.put("first_apartment_number", csvRow[1].trim());
-        values.put("last_apartment_number", csvRow[2].trim());
-        db.insert("streets", null, values);
-
+        dao.create(street);
         return true;
     }
 
-    private boolean doesStreetExist(String streetCode) {
-        SQLiteDatabase db = dbHelper.getReadableDatabase();
-        Cursor cursor = db.query("streets", null, "street_code = ?", new String[] {streetCode},
-                null, null, null);
-        try {
-            if (cursor.moveToFirst()) {
-                return true;
-            } else {
-                return false;
-            }
-        } finally {
-            cursor.close();
-            db.close();
-        }
+    private boolean doesStreetExist(RuntimeExceptionDao<Street, Integer> dao, String streetCode) {
+        List<Street> streets = dao.queryForEq("street_code", streetCode);
+        return !streets.isEmpty();
     }
 }
