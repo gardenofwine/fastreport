@@ -4,12 +4,12 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
-import com.gardenofwine.www.fastreport.db.models.Street;
+import com.google.common.io.CharStreams;
 import com.j256.ormlite.android.apptools.OrmLiteSqliteOpenHelper;
 import com.j256.ormlite.support.ConnectionSource;
-import com.j256.ormlite.table.TableUtils;
 
-import java.sql.SQLException;
+import java.io.IOException;
+import java.io.InputStreamReader;
 
 /**
  * Created by ifeins on 2/18/15.
@@ -22,22 +22,49 @@ public class FastReportDBHelper extends OrmLiteSqliteOpenHelper {
 
     private static final int DB_VERSION = 1;
 
+    private final Context context;
+
     public FastReportDBHelper(Context context) {
         super(context, DB_NAME, null, DB_VERSION);
+        this.context = context;
     }
 
     @Override
     public void onCreate(SQLiteDatabase database, ConnectionSource connectionSource) {
-        try {
-            TableUtils.createTable(connectionSource, Street.class);
-        } catch (SQLException e) {
-            Log.e(LOG_TAG, e.getMessage(), e);
-        }
+        migrate(database, 0, 1);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase database, ConnectionSource connectionSource, int oldVersion, int newVersion) {
+        migrate(database, oldVersion, newVersion);
+    }
 
+    private void migrate(SQLiteDatabase database, int oldVersion, int newVersion) {
+        for (int i = oldVersion + 1; i <= newVersion; i++) {
+            String content = readMigrationContent(i);
+            database.execSQL(content);
+        }
+    }
+
+    private String readMigrationContent(int dbVersion) {
+        InputStreamReader reader = null;
+        try {
+            String migrationPath = new StringBuilder("migrations/").append(dbVersion).append(".sql").toString();
+            reader = new InputStreamReader(context.getAssets().open(migrationPath));
+            return CharStreams.toString(reader);
+        } catch (IOException e) {
+            Log.e(LOG_TAG, e.getMessage(), e);
+            throw new RuntimeException("Could not read migration for db version: " + dbVersion);
+        } finally {
+            if (reader != null) {
+                try {
+                    reader.close();
+                } catch (IOException e) {
+                    Log.e(LOG_TAG, e.getMessage(), e);
+                    // not throwing exception so we were able to read the migration content
+                }
+            }
+        }
     }
 
 }
