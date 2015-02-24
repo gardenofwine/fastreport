@@ -27,6 +27,10 @@ public class Street {
     @DatabaseField(columnName = "last_apartment_number")
     int lastApartmentNumber;
 
+    public Street() {
+        // needed for ORMLite
+    }
+
     public Street(String streetName, String englishStreetName, int streetCode, int firstApartmentNumber, int lastApartmentNumber) {
         this.streetName = streetName;
         this.englishStreetName = englishStreetName;

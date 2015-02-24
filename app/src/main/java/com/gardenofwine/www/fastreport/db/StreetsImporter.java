@@ -32,11 +32,11 @@ public class StreetsImporter {
     }
 
     public void importStreetsFromCSV() {
-        FastReportDBHelper dbHelper = OpenHelperManager.getHelper(context, FastReportDBHelper.class);
-        final RuntimeExceptionDao<Street, Integer> dao = dbHelper.getRuntimeExceptionDao(Street.class);
-        ConnectionSource connectionSource = dbHelper.getConnectionSource();
-
         try {
+            FastReportDBHelper dbHelper = OpenHelperManager.getHelper(context, FastReportDBHelper.class);
+            final RuntimeExceptionDao<Street, Integer> dao = dbHelper.getRuntimeExceptionDao(Street.class);
+            ConnectionSource connectionSource = dbHelper.getConnectionSource();
+
             TransactionManager.callInTransaction(connectionSource, new Callable<Void>() {
                 @Override
                 public Void call() throws Exception {
