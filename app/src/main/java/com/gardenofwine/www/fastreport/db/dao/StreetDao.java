@@ -46,7 +46,7 @@ public class StreetDao extends BaseCustomDao<Street, Integer> {
 
     public List<Street> filterStreets(String prefix) {
         try {
-            return queryBuilder().where().like("street_name", prefix + "%").query();
+            return queryBuilder().where().like("street_name", "%" + prefix + "%").query();
         } catch (SQLException e) {
             Log.e(LOG_TAG, "Encountered error while trying to filter streets", e);
         }
