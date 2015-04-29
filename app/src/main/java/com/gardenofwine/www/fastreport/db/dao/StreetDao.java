@@ -19,6 +19,9 @@ import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.DatabaseTableConfig;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -48,6 +51,27 @@ public class StreetDao extends BaseCustomDao<Street, Integer> {
             Log.e(LOG_TAG, "Encountered error while trying to filter streets", e);
         }
 
+        return Collections.emptyList();
+    }
+
+    public Street findStreetByName(String name) {
+        SelectArg selectArg = new SelectArg(name);
+        try {
+            return queryBuilder().where().eq("street_name", selectArg).queryForFirst();
+        } catch (SQLException e) {
+            Log.e(LOG_TAG, "Encountered error while trying to find street", e);
+        }
+
         return null;
+    }
+
+    public List<Street> findStreetsByStreetCode(int streetCode) {
+        try {
+            return queryBuilder().where().eq("street_code", streetCode).query();
+        } catch (SQLException e) {
+            Log.e(LOG_TAG, "Encountered error while trying to find streets", e);
+        }
+
+        return Collections.emptyList();
     }
 }
