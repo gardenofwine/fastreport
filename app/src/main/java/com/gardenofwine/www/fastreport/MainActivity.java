@@ -23,7 +23,7 @@ public class MainActivity extends ActionBarActivity {
         setContentView(R.layout.activity_main);
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container, new ServiceRequestFragment())
+                    .add(R.id.container, new ServiceFormFragment())
                     .commit();
         }
     }
@@ -51,61 +51,4 @@ public class MainActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    /**
-     * A placeholder fragment containing a simple view.
-     */
-    public static class ServiceRequestFragment extends Fragment {
-
-        private AutoCompleteTextView mAddressTextView;
-
-        private StreetDao mStreetDao;
-
-        public ServiceRequestFragment() {
-        }
-
-        @Override
-        public void onCreate(Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
-
-            FastReportDBHelper dbHelper = OpenHelperManager.getHelper(getActivity(), FastReportDBHelper.class);
-            mStreetDao = dbHelper.getDao(Street.class);
-        }
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_main, container, false);
-
-            mAddressTextView = (AutoCompleteTextView) rootView.findViewById(R.id.addressField);
-            mAddressTextView.setAdapter(new StreetAdapter(getActivity(), mStreetDao));
-
-            final Button button = (Button) rootView.findViewById(R.id.submit_button);
-            button.setOnClickListener(new View.OnClickListener() {
-                public void onClick(View v) {
-//                    new PostServiceRequestTask().execute("");
-                }
-            });
-
-            return rootView;
-        }
-
-        @Override
-        public void onDestroy() {
-            OpenHelperManager.releaseHelper();
-            super.onDestroy();
-        }
-    }
-
-    public static class PostServiceRequestTask extends AsyncTask<String, Void, String> {
-
-        @Override
-        protected String doInBackground(String... params) {
-            new DigitelMobileAPI().postServiceRequest(params[0]);
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(String result) {
-        }
-    }
 }
