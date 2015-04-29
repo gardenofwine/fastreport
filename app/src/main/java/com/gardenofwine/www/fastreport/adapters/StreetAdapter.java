@@ -46,7 +46,7 @@ public class StreetAdapter extends BaseAdapter implements Filterable {
 
     @Override
     public int getCount() {
-        return mStreets.size()
+        return mStreets.size();
     }
 
     @Override
@@ -96,6 +96,10 @@ public class StreetAdapter extends BaseAdapter implements Filterable {
         @Override
         protected void publishResults(CharSequence constraint, FilterResults results) {
             mStreets.clear();
+            if (results.values == null) {
+                return;
+            }
+
             mStreets.addAll((List<Street>) results.values);
 
             if (results.count > 0) {

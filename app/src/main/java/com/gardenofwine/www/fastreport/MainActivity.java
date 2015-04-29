@@ -82,7 +82,7 @@ public class MainActivity extends ActionBarActivity {
             View rootView = inflater.inflate(R.layout.fragment_main, container, false);
 
             mAddressTextView = (AutoCompleteTextView) rootView.findViewById(R.id.addressField);
-            mAddressTextView.setAdapter(new StreetAdapter(mStreetDao));
+            mAddressTextView.setAdapter(new StreetAdapter(getActivity(), mStreetDao));
 
             final Button button = (Button) rootView.findViewById(R.id.submit_button);
             button.setOnClickListener(new View.OnClickListener() {
