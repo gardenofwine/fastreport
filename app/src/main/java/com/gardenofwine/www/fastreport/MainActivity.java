@@ -76,7 +76,7 @@ public class MainActivity extends ActionBarActivity {
 
         @Override
         protected String doInBackground(String... params) {
-            new DigitelMobileAPI().postServiceRequest(params[0]);
+//            new DigitelMobileAPI().postServiceRequest(params[0]);
             return null;
         }
 
