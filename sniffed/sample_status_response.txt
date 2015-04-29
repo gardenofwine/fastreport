@@ -1,0 +1,183 @@
+HTTP/1.1 200 OK
+Set-Cookie: DigitelMobile-TLV-TMG=R3789869194; path=/
+Connection: Keep-Alive
+Content-Length: 7958
+Date: Wed, 29 Apr 2015 13:54:40 GMT
+Content-Type: text/xml; charset=utf-8
+Set-Cookie: TP=R3394843956; path=/
+Cache-Control: private, max-age=0
+X-AspNet-Version: 4.0.30319
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: POST
+Access-Control-Allow-Headers: Content-Type, Accept
+X-Powered-By: ASP.NET
+
+<?xml version="1.0" encoding="utf-8"?>
+<response>
+  <dss>
+    <ds id="113">
+      <DocumentElement>
+        <cell>
+          <StatusDesc>ממתין לאישור</StatusDesc>
+          <UpdateDate>29.04.2015</UpdateDate>
+          <Description>אתר בניה חוסם את המדרכה והולכי רגל נאלצים ללכת על הכביש</Description>
+          <DeviceToken>Alpha100</DeviceToken>
+          <MobUserId>9c41fab3b7255885</MobUserId>
+          <ms_pniya>80013478</ms_pniya>
+        </cell>
+        <cell>
+          <StatusDesc>ממתין לאישור</StatusDesc>
+          <UpdateDate>29.04.2015</UpdateDate>
+          <Description>אופנוע חונה עם 2 גלגלים על המדרכה וחוסם מעבר הולכי רגל 8997775</Description>
+          <DeviceToken>Alpha100</DeviceToken>
+          <MobUserId>9c41fab3b7255885</MobUserId>
+          <ms_pniya>80013477</ms_pniya>
+        </cell>
+        <cell>
+          <StatusDesc>הודעתך התקבלה, היחידה הגיעה למקום ב</StatusDesc>
+          <UpdateDate>13.04.2015</UpdateDate>
+          <CloseDate>4/13/2015 11:01:00 PM</CloseDate>
+          <Description>רכב 3487851 חוסם את כל המדרכה והולכי רגל לא יכולים לעבור</Description>
+          <DeviceToken>Alpha100</DeviceToken>
+          <MobUserId>9c41fab3b7255885</MobUserId>
+          <ms_pniya>80012872</ms_pniya>
+        </cell>
+        <cell>
+          <StatusDesc>הודעתך טופלה.</StatusDesc>
+          <UpdateDate>28.03.2015</UpdateDate>
+          <CloseDate>3/28/2015 4:58:03 PM</CloseDate>
+          <Description>נחש צפע קטן בגינה הציבורית</Description>
+          <DeviceToken>Alpha100</DeviceToken>
+          <MobUserId>9c41fab3b7255885</MobUserId>
+          <ms_pniya>80012245</ms_pniya>
+        </cell>
+        <cell>
+          <StatusDesc>הודעתך טופלה.</StatusDesc>
+          <UpdateDate>26.03.2015</UpdateDate>
+          <CloseDate>3/26/2015 3:33:00 PM</CloseDate>
+          <Description>רכב חונה על המדרכה וחוסם אותה לחלוטין
+מספר הרכב בתמונה</Description>
+          <DeviceToken>Alpha100</DeviceToken>
+          <MobUserId>9c41fab3b7255885</MobUserId>
+          <ms_pniya>80012186</ms_pniya>
+        </cell>
+        <cell>
+          <StatusDesc>הודעתך טופלה.</StatusDesc>
+          <UpdateDate>24.02.2015</UpdateDate>
+          <CloseDate>2/24/2015 12:15:00 PM</CloseDate>
+          <Description>משאית חוסמת מדרכה
+פקח הגיע למקום ולא נתן דוח והמשאית עדיין שם
+7469252</Description>
+          <DeviceToken>Alpha100</DeviceToken>
+          <MobUserId>9c41fab3b7255885</MobUserId>
+          <ms_pniya>80011101</ms_pniya>
+        </cell>
+        <cell>
+          <StatusDesc>בטיפול</StatusDesc>
+          <UpdateDate>24.02.2015</UpdateDate>
+          <CloseDate>2/24/2015 12:45:06 PM</CloseDate>
+          <Description>רכב מסחרי חוסם מדרכה מספר:
+7469252
+ורכב מספר
+1325366</Description>
+          <DeviceToken>Alpha100</DeviceToken>
+          <MobUserId>9c41fab3b7255885</MobUserId>
+          <ms_pniya>80011099</ms_pniya>
+        </cell>
+        <cell>
+          <StatusDesc>הודעתך טופלה.</StatusDesc>
+          <UpdateDate>22.02.2015</UpdateDate>
+          <CloseDate>2/22/2015 12:27:00 PM</CloseDate>
+          <Description>מתקן פסולת בניה חוסם חצי מהמדרכה</Description>
+          <DeviceToken>Alpha100</DeviceToken>
+          <MobUserId>9c41fab3b7255885</MobUserId>
+          <ms_pniya>80010906</ms_pniya>
+        </cell>
+        <cell>
+          <StatusDesc>הודעתך נבדקה והגורם המקצועי אינו ממליץ לבצע את המבוקש.</StatusDesc>
+          <UpdateDate>19.02.2015</UpdateDate>
+          <CloseDate>2/19/2015 11:42:00 AM</CloseDate>
+          <Description>רכב חונה 4 גלגלים על המדרכה וחוסם אותה
+
+מספרו 9454663
+</Description>
+          <DeviceToken>Alpha100</DeviceToken>
+          <MobUserId>9c41fab3b7255885</MobUserId>
+          <ms_pniya>80010924</ms_pniya>
+        </cell>
+        <cell>
+          <StatusDesc>ממתין לאישור</StatusDesc>
+          <UpdateDate>18.02.2015</UpdateDate>
+          <Description>מתקן פסולת בניה חוסם חצי מהמדרכה</Description>
+          <DeviceToken>Alpha100</DeviceToken>
+          <MobUserId>9c41fab3b7255885</MobUserId>
+          <ms_pniya>80010905</ms_pniya>
+        </cell>
+        <cell>
+          <StatusDesc>ממתין לאישור</StatusDesc>
+          <UpdateDate>18.02.2015</UpdateDate>
+          <Description>מתקן פסולת בניה חוסם חצי מהמדרכה</Description>
+          <DeviceToken>Alpha100</DeviceToken>
+          <MobUserId>9c41fab3b7255885</MobUserId>
+          <ms_pniya>80010904</ms_pniya>
+        </cell>
+        <cell>
+          <StatusDesc>הוגש דוח או דרישה לטיפול.</StatusDesc>
+          <UpdateDate>15.02.2015</UpdateDate>
+          <CloseDate>2/15/2015 2:09:53 PM</CloseDate>
+          <Description>אתר בניה חוסם את המדרכה והולכי רגל נאלצים ללכת על הכביש</Description>
+          <DeviceToken>Alpha100</DeviceToken>
+          <MobUserId>9c41fab3b7255885</MobUserId>
+          <ms_pniya>80010728</ms_pniya>
+        </cell>
+        <cell>
+          <StatusDesc>בטיפול</StatusDesc>
+          <UpdateDate>11.02.2015</UpdateDate>
+          <CloseDate>2/12/2015 7:43:13 PM</CloseDate>
+          <Description>אתר בניה חוסם את המדרכה לחלוטין ללא שילוט</Description>
+          <DeviceToken>Alpha100</DeviceToken>
+          <MobUserId>9c41fab3b7255885</MobUserId>
+          <ms_pniya>80010727</ms_pniya>
+        </cell>
+        <cell>
+          <StatusDesc>הודעתך התקבלה, אך לצערנו אין באפשרותנו לטפל בה. לפרטים נוספים ניתן לפנות למוקד שירות 106.</StatusDesc>
+          <UpdateDate>02.02.2015</UpdateDate>
+          <CloseDate>2/2/2015 9:51:49 AM</CloseDate>
+          <Description>רכב שמספרו 32448776 חונה עם 2 גלגלים על המדרכה בניגוד לחוק</Description>
+          <DeviceToken>Alpha100</DeviceToken>
+          <MobUserId>9c41fab3b7255885</MobUserId>
+          <ms_pniya>80010285</ms_pniya>
+        </cell>
+        <cell>
+          <StatusDesc>הוגש דוח או דרישה לטיפול.</StatusDesc>
+          <UpdateDate>28.01.2015</UpdateDate>
+          <CloseDate>1/28/2015 3:56:00 PM</CloseDate>
+          <Description>רכב ואופנוע חוסמים מעבר הולכי רגל
+מספר הרכב 3244876</Description>
+          <DeviceToken>Alpha100</DeviceToken>
+          <MobUserId>9c41fab3b7255885</MobUserId>
+          <ms_pniya>80010292</ms_pniya>
+        </cell>
+        <cell>
+          <StatusDesc>הודעתך טופלה.</StatusDesc>
+          <UpdateDate>28.01.2015</UpdateDate>
+          <CloseDate>1/28/2015 11:47:16 AM</CloseDate>
+          <Description>רכב חונה על המדרכה</Description>
+          <DeviceToken>Alpha100</DeviceToken>
+          <MobUserId>9c41fab3b7255885</MobUserId>
+          <ms_pniya>80010284</ms_pniya>
+        </cell>
+        <cell>
+          <StatusDesc>הודעתך התקבלה, היחידה הגיעה למקום ב</StatusDesc>
+          <UpdateDate>14.01.2015</UpdateDate>
+          <CloseDate>1/14/2015 10:25:00 PM</CloseDate>
+          <Description>מכונית חוסמת נתצ
+ </Description>
+          <DeviceToken>Alpha100</DeviceToken>
+          <MobUserId>9c41fab3b7255885</MobUserId>
+          <ms_pniya>80009976</ms_pniya>
+        </cell>
+      </DocumentElement>
+    </ds>
+  </dss>
+</response>

@@ -73,7 +73,6 @@ public class DigitelMobileAPI {
     }
 
     private String requestBody(String description) {
-        String BENNY_NEXUS_5_USER_ID = "8c41f6b3b72198a5";
         String RANDOM_NEXUS_5_USER_ID = "9c41fab3b7255885";
 
         String body = requestBody.replace(TOKEN_USER_ID, RANDOM_NEXUS_5_USER_ID);
