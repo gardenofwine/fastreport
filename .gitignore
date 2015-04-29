@@ -32,8 +32,8 @@ project.properties
 .project
 
 # idea project files
-.idea/
-.idea/.name
+.idea/workspace.iml
+.idea/libraries
 *.iml
 *.ipr
 *.iws
