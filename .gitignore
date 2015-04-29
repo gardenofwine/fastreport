@@ -32,7 +32,7 @@ project.properties
 .project
 
 # idea project files
-.idea/workspace.iml
+.idea/workspace.xml
 .idea/libraries
 *.iml
 *.ipr
