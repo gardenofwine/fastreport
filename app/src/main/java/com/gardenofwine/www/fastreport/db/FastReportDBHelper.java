@@ -6,10 +6,12 @@ import android.util.Log;
 
 import com.google.common.io.CharStreams;
 import com.j256.ormlite.android.apptools.OrmLiteSqliteOpenHelper;
+import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.support.ConnectionSource;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.sql.SQLException;
 
 /**
  * Created by ifeins on 2/18/15.
@@ -64,6 +66,15 @@ public class FastReportDBHelper extends OrmLiteSqliteOpenHelper {
                     // not throwing exception so we were able to read the migration content
                 }
             }
+        }
+    }
+
+    @Override
+    public <D extends Dao<T, ?>, T> D getDao(Class<T> clazz) {
+        try {
+            return super.getDao(clazz);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
 
