@@ -109,5 +109,6 @@ public class StreetAdapter extends BaseAdapter implements Filterable {
                 notifyDataSetInvalidated();
             }
         }
+        
     }
 }

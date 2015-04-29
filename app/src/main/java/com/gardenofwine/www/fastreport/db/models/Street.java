@@ -74,4 +74,9 @@ public class Street {
     public int getLastApartmentNumber() {
         return lastApartmentNumber;
     }
+
+    @Override
+    public String toString() {
+        return getStreetName();
+    }
 }
