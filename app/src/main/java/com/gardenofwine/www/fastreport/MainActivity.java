@@ -9,6 +9,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 
 
@@ -53,6 +54,8 @@ public class MainActivity extends ActionBarActivity {
      */
     public static class ServiceRequestFragment extends Fragment {
 
+        private AutoCompleteTextView mAddressTextView;
+
         public ServiceRequestFragment() {
         }
 
@@ -61,12 +64,18 @@ public class MainActivity extends ActionBarActivity {
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_main, container, false);
 
+            mAddressTextView = (AutoCompleteTextView) rootView.findViewById(R.id.addressField);
+
+            mAddressTextView.setAdapter();
+
+
             final Button button = (Button) rootView.findViewById(R.id.submit_button);
             button.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
-                    new PostServiceRequestTask().execute("");
+//                    new PostServiceRequestTask().execute("");
                 }
             });
+
 
             return rootView;
         }
