@@ -11,41 +11,98 @@
 
 package com.gardenofwine.www.fastreport.adapters;
 
+import android.content.Context;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Filter;
 import android.widget.Filterable;
+import android.widget.TextView;
+
+import com.gardenofwine.www.fastreport.db.dao.StreetDao;
+import com.gardenofwine.www.fastreport.db.models.Street;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
- *
  * An adapter that auto-completes streets.
+ *
  * @author ifeins
  */
 public class StreetAdapter extends BaseAdapter implements Filterable {
 
+    private final StreetDao mStreetDao;
+    private final Context mContext;
+    private Filter mFilter;
+    private List<Street> mStreets = new ArrayList<>();
+
+    public StreetAdapter(Context context, StreetDao streetDao) {
+        mContext = context;
+        mStreetDao = streetDao;
+        mFilter = new StreetsFilter();
+    }
+
     @Override
     public int getCount() {
-        return 0;
+        return mStreets.size()
     }
 
     @Override
     public Object getItem(int position) {
-        return null;
+        return mStreets.get(position);
+    }
+
+    public Street getStreet(int position) {
+        return (Street) getItem(position);
     }
 
     @Override
     public long getItemId(int position) {
-        return 0;
+        return position;
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        return null;
+        TextView textView;
+        if (convertView != null) {
+            textView = (TextView) convertView;
+        } else {
+            textView = (TextView) LayoutInflater.from(mContext).inflate(android.R.layout.simple_dropdown_item_1line, parent, false);
+        }
+
+        textView.setText(getStreet(position).getStreetName());
+        return textView;
     }
 
     @Override
     public Filter getFilter() {
-        return null;
+        return mFilter;
+    }
+
+    private class StreetsFilter extends Filter {
+
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+            List<Street> streets = mStreetDao.filterStreets(constraint.toString());
+            FilterResults results = new FilterResults();
+            results.values = streets;
+            results.count = streets.size();
+
+            return results;
+        }
+
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+            mStreets.clear();
+            mStreets.addAll((List<Street>) results.values);
+
+            if (results.count > 0) {
+                notifyDataSetChanged();
+            } else {
+                notifyDataSetInvalidated();
+            }
+        }
     }
 }

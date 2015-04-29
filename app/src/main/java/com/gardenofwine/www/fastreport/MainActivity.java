@@ -12,6 +12,13 @@ import android.view.ViewGroup;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 
+import com.gardenofwine.www.fastreport.adapters.StreetAdapter;
+import com.gardenofwine.www.fastreport.db.FastReportDBHelper;
+import com.gardenofwine.www.fastreport.db.dao.StreetDao;
+import com.gardenofwine.www.fastreport.db.models.Street;
+import com.j256.ormlite.android.apptools.OpenHelperManager;
+import com.j256.ormlite.dao.Dao;
+
 
 public class MainActivity extends ActionBarActivity {
 
@@ -56,7 +63,17 @@ public class MainActivity extends ActionBarActivity {
 
         private AutoCompleteTextView mAddressTextView;
 
+        private StreetDao mStreetDao;
+
         public ServiceRequestFragment() {
+        }
+
+        @Override
+        public void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+
+            FastReportDBHelper dbHelper = OpenHelperManager.getHelper(getActivity(), FastReportDBHelper.class);
+            mStreetDao = dbHelper.getDao(Street.class);
         }
 
         @Override
@@ -65,9 +82,7 @@ public class MainActivity extends ActionBarActivity {
             View rootView = inflater.inflate(R.layout.fragment_main, container, false);
 
             mAddressTextView = (AutoCompleteTextView) rootView.findViewById(R.id.addressField);
-
-            mAddressTextView.setAdapter();
-
+            mAddressTextView.setAdapter(new StreetAdapter(mStreetDao));
 
             final Button button = (Button) rootView.findViewById(R.id.submit_button);
             button.setOnClickListener(new View.OnClickListener() {
@@ -76,8 +91,13 @@ public class MainActivity extends ActionBarActivity {
                 }
             });
 
-
             return rootView;
+        }
+
+        @Override
+        public void onDestroy() {
+            OpenHelperManager.releaseHelper();
+            super.onDestroy();
         }
     }
 
