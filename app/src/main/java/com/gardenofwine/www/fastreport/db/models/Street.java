@@ -18,6 +18,9 @@ public class Street {
     @DatabaseField(columnName = "street_name", canBeNull = false)
     String streetName;
 
+    @DatabaseField(columnName = "search_street_name", canBeNull = false)
+    String searchFriendlyStreetName;
+
     @DatabaseField(columnName = "english_street_name")
     String englishStreetName;
 
@@ -30,12 +33,18 @@ public class Street {
     @DatabaseField(columnName = "last_apartment_number")
     int lastApartmentNumber;
 
+    public static String searchFriendlyName(String streetName) {
+        return streetName.replace("\"", "").replace("'", "").replace("-", " ").replace("(", "").replace(")", "");
+    }
+
     public Street() {
         // needed for ORMLite
     }
 
-    public Street(String streetName, String englishStreetName, int streetCode, int firstApartmentNumber, int lastApartmentNumber) {
+    public Street(String streetName, String searchFriendlyStreetName, String englishStreetName,
+                  int streetCode, int firstApartmentNumber, int lastApartmentNumber) {
         this.streetName = streetName;
+        this.searchFriendlyStreetName = searchFriendlyStreetName;
         this.englishStreetName = englishStreetName;
         this.streetCode = streetCode;
         this.firstApartmentNumber = firstApartmentNumber;

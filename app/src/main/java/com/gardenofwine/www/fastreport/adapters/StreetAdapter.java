@@ -85,7 +85,8 @@ public class StreetAdapter extends BaseAdapter implements Filterable {
 
         @Override
         protected FilterResults performFiltering(CharSequence constraint) {
-            List<Street> streets = mStreetDao.filterStreets(constraint.toString());
+            String searchToken = Street.searchFriendlyName(constraint.toString());
+            List<Street> streets = mStreetDao.filterStreets(searchToken);
             FilterResults results = new FilterResults();
             results.values = streets;
             results.count = streets.size();

@@ -18,6 +18,7 @@ import java.util.concurrent.Callable;
 import au.com.bytecode.opencsv.CSVReader;
 
 /**
+ * Import streets from a CSV.
  * Created by ifeins on 2/18/15.
  */
 public class StreetsImporter {
@@ -76,7 +77,10 @@ public class StreetsImporter {
             return false;
         }
 
-        Street street = new Street(csvRow[3].trim(), csvRow[4].trim(), Integer.parseInt(streetCode),
+        String streetName = csvRow[3].trim();
+        String searchFriendlyStreetName = Street.searchFriendlyName(streetName);
+
+        Street street = new Street(streetName, searchFriendlyStreetName, csvRow[4].trim(), Integer.parseInt(streetCode),
                 Integer.parseInt(csvRow[1].trim()),
                 Integer.parseInt(csvRow[2].trim()));
 
