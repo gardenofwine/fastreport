@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <!--Labels-->
     <string name="app_name">דו״ח מהיר</string>
     <string name="action_settings">Settings</string>
     <string name="action_open_service_request">פתח קריאה</string>
@@ -9,5 +10,10 @@
     <string name="label_phone">טלפון</string>
     <string name="label_address">כתובת המפגע</string>
     <string name="label_description">תיאור המפגע</string>
+
+    <!--App Keys-->
+    <string name="first_name_key">first_name_key</string>
+    <string name="last_name_key">last_name_key</string>
+    <string name="phone_key">phone_name_key</string>
 
 </resources>

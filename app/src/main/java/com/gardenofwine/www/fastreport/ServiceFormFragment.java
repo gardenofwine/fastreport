@@ -1,5 +1,7 @@
 package com.gardenofwine.www.fastreport;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -19,6 +21,7 @@ import com.j256.ormlite.android.apptools.OpenHelperManager;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import butterknife.OnClick;
 import butterknife.OnTextChanged;
 
 /**
@@ -26,20 +29,30 @@ import butterknife.OnTextChanged;
  */
 public class ServiceFormFragment extends Fragment {
 
+
     @OnTextChanged(R.id.firstNameField) void onFirstNameChanged(CharSequence text) {
-        Toast.makeText(getActivity(), "Text changed: " + text, Toast.LENGTH_SHORT).show();
+        commitStringPref(R.string.first_name_key, text);
     }
+
 
     @OnTextChanged(R.id.lastNameField) void onLastNameChanged(CharSequence text) {
-        Toast.makeText(getActivity(), "Text changed: " + text, Toast.LENGTH_SHORT).show();
+        commitStringPref(R.string.last_name_key, text);
     }
 
-    private AutoCompleteTextView mAddressTextView;
-    private StreetDao mStreetDao;
+    @OnTextChanged(R.id.phoneField) void onPhoneChanged(CharSequence text) {
+        commitStringPref(R.string.phone_key, text);
+    }
+
+    @OnClick(R.id.submit_button) void onSubmitReport(){
+        new PostServiceRequestTask().execute("");
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        mPrefs = getActivity().getPreferences(Context.MODE_PRIVATE);
+        mPrefsEditor = mPrefs.edit();
 
         FastReportDBHelper dbHelper = OpenHelperManager.getHelper(getActivity(), FastReportDBHelper.class);
         mStreetDao = dbHelper.getDao(Street.class);
@@ -51,18 +64,30 @@ public class ServiceFormFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_service_form, container, false);
         ButterKnife.inject(this, rootView);
 
+        mFirstNameEditText.setText(mPrefs.getString(getString(R.string.first_name_key), ""));
+        mLastNameEditText.setText(mPrefs.getString(getString(R.string.last_name_key), ""));
+        mPhoneEditText.setText(mPrefs.getString(getString(R.string.phone_key), ""));
+
+
         mAddressTextView = (AutoCompleteTextView) rootView.findViewById(R.id.addressField);
         mAddressTextView.setAdapter(new StreetAdapter(getActivity(), mStreetDao));
 
-        final Button button = (Button) rootView.findViewById(R.id.submit_button);
-        button.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                new PostServiceRequestTask().execute("");
-            }
-        });
-
         return rootView;
     }
+
+    private void commitStringPref(int stringKey, CharSequence string){
+        mPrefsEditor.putString(getString(stringKey), string.toString());
+        mPrefsEditor.commit();
+    }
+
+    private AutoCompleteTextView mAddressTextView;
+    private StreetDao mStreetDao;
+    private SharedPreferences.Editor mPrefsEditor;
+    private SharedPreferences mPrefs;
+
+    @InjectView(R.id.firstNameField) EditText mFirstNameEditText;
+    @InjectView(R.id.lastNameField) EditText mLastNameEditText;
+    @InjectView(R.id.phoneField) EditText mPhoneEditText;
 
     public static class PostServiceRequestTask extends AsyncTask<String, Void, String> {
 
