@@ -10,6 +10,8 @@
     <string name="label_phone">טלפון</string>
     <string name="label_address">כתובת המפגע</string>
     <string name="label_description">תיאור המפגע</string>
+    <string name="label_reporter_info">פרטי המדווח/ת</string>
+    <string name="label_hazard_info">פרטי המפגע</string>
 
     <!--App Keys-->
     <string name="first_name_key">first_name_key</string>
