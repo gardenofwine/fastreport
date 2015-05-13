@@ -1,4 +1,4 @@
-package com.gardenofwine.www.fastreport;
+package com.gardenofwine.www.fastreport.api;
 
 import android.net.Uri;
 import android.util.Log;
