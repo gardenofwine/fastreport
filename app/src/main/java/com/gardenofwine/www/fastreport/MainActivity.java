@@ -1,19 +1,8 @@
 package com.gardenofwine.www.fastreport;
 
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBarActivity;
 import android.view.*;
-import android.widget.AutoCompleteTextView;
-import android.widget.Button;
-
-import com.gardenofwine.www.fastreport.adapters.StreetAdapter;
-import com.gardenofwine.www.fastreport.db.FastReportDBHelper;
-import com.gardenofwine.www.fastreport.db.dao.StreetDao;
-import com.gardenofwine.www.fastreport.db.models.Street;
-import com.j256.ormlite.android.apptools.OpenHelperManager;
-
 
 public class MainActivity extends ActionBarActivity {
 
