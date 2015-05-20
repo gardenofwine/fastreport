@@ -31,7 +31,14 @@ public class DigitelRequestSerializer {
                     .elem("controls")
                     .elem("control");
 
+        addListControls(request, builder);
+        addDss(builder);
+        addMonitor(builder);
 
+        return builder.asString();
+    }
+
+    private static void addListControls(DigitelRequest request, XMLBuilder2 builder) {
         Map<String, String> listControls = new HashMap<>();
         listControls.put("firstName", request.getFirstName());
         listControls.put("lastName", request.getLastName());
@@ -54,8 +61,9 @@ public class DigitelRequestSerializer {
         for (Map.Entry<String, String> entry : listControls.entrySet()) {
             addListControl(builder, entry.getKey(), entry.getValue());
         }
+    }
 
-        // <dss>...</dss>
+    private static void addDss(XMLBuilder2 builder) {
         builder.up().up()
                 .elem("dss")
                     .elem("ds").attr("id", "")
@@ -65,10 +73,11 @@ public class DigitelRequestSerializer {
                     .up()
                 .up()
             .up();
+    }
 
+    private static void addMonitor(XMLBuilder2 builder) {
         long currentTime = System.currentTimeMillis() / 1000L;
 
-        // <monitor>...</monitor>
         builder.elem("monitor")
                     .elem("monitor_TableSourceId").text("112").up()
                     .elem("monitor_Layir").up()
@@ -81,8 +90,6 @@ public class DigitelRequestSerializer {
                     .elem("monitor_appVersion").text("5.0 (Linux; Android 4.4.4; Nexus 5 Build/KTU84P) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/33.0.0.0 Mobile Safari/537.36").up()
                     .elem("monitor_real_html").text("157").up()
                 .up();
-
-        return builder.asString();
     }
 
     public static void addListControl(XMLBuilder2 builder, String controlName, String controlValue) {
