@@ -1,13 +1,8 @@
 package com.gardenofwine.www.fastreport.api;
 
-import android.net.Uri;
 import android.util.Log;
 
-import java.io.BufferedReader;
-import java.io.DataOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
@@ -18,20 +13,22 @@ import java.net.URL;
  */
 public class DigitelMobileAPI {
 
-    public void postServiceRequest(String description){
+    private static final String DEFAULT_BASE_URL = "http://digitelmobile.tel-aviv.gov.il";
+    private final String mBaseUrl;
 
-        HttpURLConnection urlConnection = null;
-        BufferedReader reader = null;
+    public DigitelMobileAPI() {
+        this(DEFAULT_BASE_URL);
+    }
 
-        // Will contain the raw JSON response as a string.
-        String forecastJsonStr = null;
+    public DigitelMobileAPI(String baseUrl) {
+        mBaseUrl = baseUrl;
+    }
 
-        // Construct the URL for the OpenWeatherMap query
-        // Possible parameters are available at OWM's forecast API page, at
-        // http://openweathermap.org/API#forecast
-        URL url = null;
+    public void postServiceRequest(String description) {
+        HttpURLConnection urlConnection;
+        URL url;
         try {
-            url = new URL("http://digitelmobile.tel-aviv.gov.il/TouchPoints/IntegrationWsMobile/PdaGateWayWs.asmx/TestPdaGateWay");
+            url = new URL(mBaseUrl + "/TouchPoints/IntegrationWsMobile/PdaGateWayWs.asmx/TestPdaGateWay");
 
             String body = requestBody(description);
             // Create the request to OpenWeatherMap, and open the connection
@@ -42,18 +39,18 @@ public class DigitelMobileAPI {
             urlConnection.setFixedLengthStreamingMode(body.length());
             urlConnection.setRequestMethod("POST");
 
-            DataOutputStream wr = new DataOutputStream (
-                    urlConnection.getOutputStream ());
-            wr.writeBytes (body);
-            wr.flush ();
-            wr.close ();
+            DataOutputStream wr = new DataOutputStream(
+                    urlConnection.getOutputStream());
+            wr.writeBytes(body);
+            wr.flush();
+            wr.close();
 
             //Get Response
             InputStream is = urlConnection.getInputStream();
             BufferedReader rd = new BufferedReader(new InputStreamReader(is));
             String line;
             StringBuffer response = new StringBuffer();
-            while((line = rd.readLine()) != null) {
+            while ((line = rd.readLine()) != null) {
                 response.append(line);
                 response.append('\r');
             }
@@ -61,15 +58,11 @@ public class DigitelMobileAPI {
 
             Log.i("**==", response.toString());
 
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        } catch (ProtocolException e) {
-            e.printStackTrace();
+        } catch (MalformedURLException|ProtocolException e) {
+            throw new IllegalArgumentException("Invalid url: ", e);
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new RuntimeException("Failed to post request: ", e);
         }
-
-
     }
 
     private String requestBody(String description) {
@@ -115,7 +108,7 @@ public class DigitelMobileAPI {
             "         <control>\n" +
             "            <listcontrol>\n" +
             "               <codekey>firstName</codekey>\n" +
-            "               <value>"+ TOKEN_FIRST_NAME + "</value>\n" +
+            "               <value>" + TOKEN_FIRST_NAME + "</value>\n" +
             "            </listcontrol>\n" +
             "            <listcontrol>\n" +
             "               <codekey>lastName</codekey>\n" +

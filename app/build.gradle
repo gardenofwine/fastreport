@@ -17,6 +17,11 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    sourceSets { main { assets.srcDirs = ['src/main/assets', 'src/androidTest/assets'] } }
+
+    packagingOptions {
+        exclude 'LICENSE.txt'
+    }
 }
 
 dependencies {
@@ -27,4 +32,11 @@ dependencies {
     compile 'com.google.guava:guava:18.0'
     compile 'com.jakewharton:butterknife:6.1.0'
     compile 'com.jamesmurty.utils:java-xmlbuilder:1.1'
+    compile 'commons-io:commons-io:2.4'
+
+    // test libraries
+    androidTestCompile 'com.android.support.test:runner:0.2'
+    androidTestCompile 'com.android.support.test:rules:0.2'
+    androidTestCompile 'com.squareup.okhttp:mockwebserver:2.3.0'
+    androidTestCompile 'xmlunit:xmlunit:1.6'
 }
